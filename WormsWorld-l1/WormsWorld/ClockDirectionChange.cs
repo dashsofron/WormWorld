@@ -1,6 +1,6 @@
 ﻿namespace WormsWorld
 {
-    public class ClockDirectionChange :DirectionChange
+    public class ClockDirectionChange :IDirectionChange
     {
         private StepDirection _direction = StepDirection.Up;
         private int border = 1;

@@ -2,7 +2,7 @@
 
 namespace WormsWorld
 {
-    public interface DirectionChange
+    public interface IDirectionChange
     {
         StepDirection ChangeDirection(Position position);
     }

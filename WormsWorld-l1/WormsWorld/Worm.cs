@@ -6,27 +6,23 @@ namespace WormsWorld
     {
         private string _name;
         private Position _position;
-        private PositionChange _positionChange;
-        private DirectionChange _directionChange;
+        private IPositionChange _positionChange;
+        private IDirectionChange _directionChange;
 
 
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        }
+        public string Name { get; set; }
 
-        public Worm(string name, Position position)
+        public Worm(string name, Position position, in int step)
         {
             Name = name;
             _position = position;
-            _positionChange = new SimplePositionChange();
+            _positionChange = new SimplePositionChange(step);
             _directionChange = new ClockDirectionChange();
         }
 
         public void SetNextPosition()
         {
-            _positionChange.changePosition(_position,_directionChange.ChangeDirection(_position));
+            _positionChange.changePosition(_position, _directionChange.ChangeDirection(_position));
         }
 
         public override string ToString()

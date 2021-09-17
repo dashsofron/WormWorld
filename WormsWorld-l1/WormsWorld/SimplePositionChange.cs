@@ -1,28 +1,33 @@
 ﻿namespace WormsWorld
 {
-    public class SimplePositionChange : PositionChange
+    public class SimplePositionChange : IPositionChange
 
     {
-        private int step = 1;
+        private int _step = 1;
+
+        public SimplePositionChange(in int step)
+        {
+            _step = step;
+        }
 
         public void changePosition(Position position, StepDirection direction)
         {
             switch (direction)
             {
                 case StepDirection.Left:
-                    position.X -= step;
+                    position.X -= _step;
                     break;
 
                 case StepDirection.Right:
-                    position.X += step;
+                    position.X += _step;
                     break;
 
                 case StepDirection.Up:
-                    position.Y += step;
+                    position.Y += _step;
                     break;
 
                 case StepDirection.Down:
-                    position.Y -= step;
+                    position.Y -= _step;
                     break;
             }
         }
