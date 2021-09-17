@@ -29,12 +29,7 @@ namespace WormsWorld
                 }
 
                 step_out += "]\n";
-                Console.Write(step_out);
-                using (StreamWriter sw = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "Worms_1.txt"),
-                    true, System.Text.Encoding.Default))
-                {
-                    sw.WriteAsync(step_out);
-                }
+                WorldStateWriter.writeNewState(step_out);
             }
         }
     }
