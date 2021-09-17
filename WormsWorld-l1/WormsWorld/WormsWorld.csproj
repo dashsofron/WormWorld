@@ -15,4 +15,9 @@
       <None Remove=".dockerignore" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="entity" />
+      <Folder Include="wormBehaviour" />
+    </ItemGroup>
+
 </Project>
