@@ -58,7 +58,7 @@ namespace WormsWorld
                     Action action = worm.GetNextAction(food, worms);
                     PerformAction(action, positionGet, nameGenerator, worm, worms);
                     wormsStr += worm;
-                    if (worm.Life == 0)
+                    if (worm.LifeStrength == 0)
                     {
                         worms.Remove(worm);
                     }
@@ -77,7 +77,7 @@ namespace WormsWorld
         {
             if (food.ContainsKey(worm.Position))
             {
-                worm.Life += FoodQuality;
+                worm.LifeStrength += FoodQuality;
                 food.Remove(worm.Position);
             }
         }
@@ -100,18 +100,18 @@ namespace WormsWorld
                     case ActionType.Move:
                         worm.Position = newPosition;
                         break;
-                    case ActionType.Multiple:
-                        if (worm.Life > Life)
+                    case ActionType.Split:
+                        if (worm.LifeStrength > Life)
                         {
                             worms.Add(new Worm(nameGenerator.GetNewName(), newPosition, Step, Life));
-                            worm.Life -= Life;
+                            worm.LifeStrength -= Life;
                         }
                         break;
                     case ActionType.NoAction: break;
                 }
             }
 
-            worm.Life--;
+            worm.LifeStrength--;
         }
 
         private static void WriteNewState(int stateNum, string foodBefore, string foodAfter, string worms)

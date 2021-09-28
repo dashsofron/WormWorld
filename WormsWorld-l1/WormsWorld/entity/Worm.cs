@@ -10,7 +10,7 @@ namespace WormsWorld.entity
 
         public string Name { get; set; }
 
-        public int Life { get; set; }
+        public int LifeStrength { get; set; }
 
         public Position Position { get; set; }
 
@@ -19,7 +19,7 @@ namespace WormsWorld.entity
             Name = name;
             Position = position;
             _directionChange = new NearestFoodDirectionChange();
-            Life = 10;
+            LifeStrength = 10;
         }
 
 
@@ -30,7 +30,7 @@ namespace WormsWorld.entity
 
         public override string ToString()
         {
-            return $"{Name} ({Position.X.ToString()},{Position.Y.ToString()},{Life.ToString()})";
+            return $"{Name} ({Position.X.ToString()},{Position.Y.ToString()},{LifeStrength.ToString()})";
         }
     }
 }

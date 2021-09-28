@@ -4,6 +4,6 @@
     {
         NoAction=0,
         Move = 1,
-        Multiple = 2
+        Split = 2
     }
 }
