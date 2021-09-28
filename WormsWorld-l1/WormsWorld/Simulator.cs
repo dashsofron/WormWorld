@@ -10,7 +10,7 @@ namespace WormsWorld
 {
     public class Simulator
     {
-        private const int StepNum = 100;
+        private const int StepNum = 10;
         private const int Step = 1;
         private const int FoodQuality = 10;
         private const int Life = 10;
@@ -51,7 +51,8 @@ namespace WormsWorld
                 food.Add(newFoodPosition, FoodQuality);
                 foodBeforeStr +=
                     $"({newFoodPosition.X.ToString()},{newFoodPosition.Y.ToString()},{food[newFoodPosition].ToString()}) ";
-                foreach (var worm in worms)
+                
+                foreach (var worm in new List<Worm>(worms))
                 {
                     TryToEat(worm, food);
                     Action action = worm.GetNextAction(food, worms);
@@ -100,7 +101,11 @@ namespace WormsWorld
                         worm.Position = newPosition;
                         break;
                     case ActionType.Multiple:
-                        worms.Add(new Worm(nameGenerator.GetNewName(), newPosition, Step, Life));
+                        if (worm.Life > Life)
+                        {
+                            worms.Add(new Worm(nameGenerator.GetNewName(), newPosition, Step, Life));
+                            worm.Life -= Life;
+                        }
                         break;
                     case ActionType.NoAction: break;
                 }
