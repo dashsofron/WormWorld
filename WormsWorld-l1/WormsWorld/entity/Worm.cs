@@ -1,33 +1,35 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
+using WormsWorld.wormBehaviour;
 
-namespace WormsWorld
+namespace WormsWorld.entity
 {
     public class Worm
     {
-        private string _name;
-        private Position _position;
-        private IPositionChange _positionChange;
-        private IDirectionChange _directionChange;
-
+        private readonly IDirectionChange _directionChange;
 
         public string Name { get; set; }
+        
+        public int Life {get; set;}
+        
+        public Position Position {get; set;}
 
-        public Worm(string name, Position position, in int step)
+        public Worm(string name, Position position, in int step, in int life)
         {
             Name = name;
-            _position = position;
-            _positionChange = new SimplePositionChange(step);
-            _directionChange = new ClockDirectionChange();
+            Position = position;
+            _directionChange = new NearestFoodDirectionChange();
+            Life = 10;
         }
 
-        public void SetNextPosition()
+       
+        public Action GetNextAction(Dictionary<Position, int> food, List<Worm> worms)
         {
-            _positionChange.changePosition(_position, _directionChange.ChangeDirection(_position));
+            return new Action(ActionType.Move,_directionChange.ChangeDirection(food, worms, Position) );
         }
-
         public override string ToString()
         {
-            return string.Format("{0} ({1},{2})", Name, _position.X.ToString(), _position.Y.ToString());
+            return $"{Name} ({Position.X.ToString()},{Position.Y.ToString()},{Life.ToString()})";
         }
     }
 }

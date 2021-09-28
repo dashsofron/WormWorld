@@ -5,16 +5,14 @@ namespace WormsWorld
 {
     public class WorldStateWriter
     {
-        private const string fileName = "Worms_1.txt";
+        private const string FileName = "Worms_1.txt";
 
-        public static void writeNewState(string info)
+        public static void WriteNewState(string info)
         {
-            Console.Write(info);
-            using (StreamWriter sw = new StreamWriter(Path.Combine(Environment.CurrentDirectory, fileName),
-                true, System.Text.Encoding.Default))
-            {
-                sw.WriteAsync(info);
-            }
+            Console.WriteLine(info);
+            using var sw = new StreamWriter(Path.Combine(Environment.CurrentDirectory, FileName),
+                true, System.Text.Encoding.Default);
+            sw.WriteLineAsync(info);
         }
     }
 }

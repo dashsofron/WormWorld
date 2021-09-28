@@ -8,16 +8,16 @@
 
     <ItemGroup>
       <Compile Remove="Program.cs" />
+      <Compile Remove="SimulatorMethods.cs" />
+      <Compile Remove="wormBehaviour\IPositionGet.cs" />
+      <Compile Remove="entity\Food.cs" />
+      <Compile Remove="wormBehaviour\IPositionChange.cs" />
+      <Compile Remove="wormBehaviour\SimplePositionChange.cs" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Dockerfile" />
       <None Remove=".dockerignore" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="entity" />
-      <Folder Include="wormBehaviour" />
     </ItemGroup>
 
 </Project>

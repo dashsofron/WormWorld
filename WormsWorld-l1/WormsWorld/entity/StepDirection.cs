@@ -1,7 +1,8 @@
-﻿namespace WormsWorld
+﻿namespace WormsWorld.entity
 {
     public enum StepDirection
     {
+        NoDirection = 0,
         Left = 1,
         Right = 2,
         Up = 3,
