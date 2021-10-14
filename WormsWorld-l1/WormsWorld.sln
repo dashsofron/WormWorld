@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsWorld", "WormsWorld\WormsWorld.csproj", "{EE9E51AA-43B1-4FAE-BF29-ABEE9D33B4E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsWorldTest", "..\WormsWorldTest\WormsWorldTest.csproj", "{525B7C9F-3221-4144-93EC-B92E6B30B7FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{EE9E51AA-43B1-4FAE-BF29-ABEE9D33B4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE9E51AA-43B1-4FAE-BF29-ABEE9D33B4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE9E51AA-43B1-4FAE-BF29-ABEE9D33B4E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{525B7C9F-3221-4144-93EC-B92E6B30B7FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{525B7C9F-3221-4144-93EC-B92E6B30B7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{525B7C9F-3221-4144-93EC-B92E6B30B7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{525B7C9F-3221-4144-93EC-B92E6B30B7FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

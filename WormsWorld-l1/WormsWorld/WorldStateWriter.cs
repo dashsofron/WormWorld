@@ -7,7 +7,7 @@ namespace WormsWorld
     {
         private const string FileName = "Worms_1.txt";
 
-        public static void WriteNewState(string info)
+        public  void WriteNewState(string info)
         {
             Console.WriteLine(info);
             using var sw = new StreamWriter(Path.Combine(Environment.CurrentDirectory, FileName),

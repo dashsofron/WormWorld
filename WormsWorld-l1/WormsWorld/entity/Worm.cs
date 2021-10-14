@@ -14,12 +14,12 @@ namespace WormsWorld.entity
 
         public Position Position { get; set; }
 
-        public Worm(string name, Position position, in int step, in int life)
+        public Worm(string name, Position position, in int life)
         {
             Name = name;
             Position = position;
             _directionChange = new NearestFoodDirectionChange();
-            LifeStrength = 10;
+            LifeStrength = life;
         }
 
 

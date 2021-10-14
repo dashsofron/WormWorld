@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 using WormsWorld.entity;
 using WormsWorld.wormBehaviour;
 using Action = WormsWorld.wormBehaviour.Action;
@@ -10,19 +13,31 @@ namespace WormsWorld
 {
     public class Simulator
     {
+        private ActionPerformer actionPerformer;
+        private FoodGenerator foodGenerator;
+        private NameGenerator nameGenerator;
+        private WorldStateWriter stateWriter;
         private const int StepNum = 10;
         private const int Step = 1;
         private const int FoodQuality = 10;
         private const int Life = 10;
 
-        static void Main(string[] args)
+        public Simulator(ActionPerformer actionPerformer, FoodGenerator foodGenerator, NameGenerator nameGenerator,
+            WorldStateWriter stateWriter)
+        {
+            this.actionPerformer = actionPerformer;
+            this.foodGenerator = foodGenerator;
+            this.nameGenerator = nameGenerator;
+            this.stateWriter = stateWriter;
+        }
+
+        public void DoWork()
         {
             PositionGet positionGet = new PositionGet(Step);
-            NameGenerator nameGenerator = new NameGenerator();
 
             Dictionary<Position, int> food = new Dictionary<Position, int>();
             List<Worm> worms = new List<Worm>();
-            worms.Add(new Worm(nameGenerator.GetNewName(), new Position(0, 0), Step, Life));
+            worms.Add(new Worm(nameGenerator.GetNewName(), new Position(0, 0), Life));
             string wormsStart = "";
 
             foreach (var worm in worms)
@@ -47,21 +62,22 @@ namespace WormsWorld
                     }
                 }
 
-                Position newFoodPosition = FoodGenerator.GetNewFoodPosition(food);
+                Position newFoodPosition = foodGenerator.GetNewFoodPosition(food);
                 food.Add(newFoodPosition, FoodQuality);
                 foodBeforeStr +=
                     $"({newFoodPosition.X.ToString()},{newFoodPosition.Y.ToString()},{food[newFoodPosition].ToString()}) ";
-                
+
                 foreach (var worm in new List<Worm>(worms))
                 {
-                    TryToEat(worm, food);
                     Action action = worm.GetNextAction(food, worms);
-                    PerformAction(action, positionGet, nameGenerator, worm, worms);
-                    wormsStr += worm;
+                    actionPerformer.PerformAction(action, positionGet, nameGenerator, worm, worms, Step, Life, food,
+                        FoodQuality);
                     if (worm.LifeStrength == 0)
                     {
                         worms.Remove(worm);
                     }
+
+                    wormsStr += worm;
                 }
 
                 foreach (var kvp in food)
@@ -73,74 +89,19 @@ namespace WormsWorld
             }
         }
 
-        private static void TryToEat(Worm worm, Dictionary<Position, int> food)
+
+        private void WriteNewState(int stateNum, string foodBefore, string foodAfter, string worms)
         {
-            if (food.ContainsKey(worm.Position))
-            {
-                worm.LifeStrength += FoodQuality;
-                food.Remove(worm.Position);
-            }
+            stateWriter.WriteNewState($"step {stateNum.ToString()}");
+            stateWriter.WriteNewState($"StartFood:[{foodBefore}]");
+            stateWriter.WriteNewState($"Worms:[{worms}]");
+            stateWriter.WriteNewState($"EndFood:[{foodAfter}]\n");
         }
 
-        private static void PerformAction(
-            Action action,
-            PositionGet positionGet,
-            NameGenerator nameGenerator,
-            Worm worm,
-            List<Worm> worms
-        )
+        private void WriteStartState(string worms)
         {
-            if (action.ActionType == ActionType.NoAction)
-                return;
-            Position newPosition = positionGet.GetNextPosition(worm.Position, action.Direction);
-            if (PlaceIsEmpty(worms, worm.Position))
-            {
-                switch (action.ActionType)
-                {
-                    case ActionType.Move:
-                        worm.Position = newPosition;
-                        break;
-                    case ActionType.Split:
-                        if (worm.LifeStrength > Life)
-                        {
-                            worms.Add(new Worm(nameGenerator.GetNewName(), newPosition, Step, Life));
-                            worm.LifeStrength -= Life;
-                        }
-                        break;
-                    case ActionType.NoAction: break;
-                }
-            }
-
-            worm.LifeStrength--;
-        }
-
-        private static void WriteNewState(int stateNum, string foodBefore, string foodAfter, string worms)
-        {
-            WorldStateWriter.WriteNewState($"step {stateNum.ToString()}");
-            WorldStateWriter.WriteNewState($"StartFood:[{foodBefore}]");
-            WorldStateWriter.WriteNewState($"Worms:[{worms}]");
-            WorldStateWriter.WriteNewState($"EndFood:[{foodAfter}]\n");
-        }
-
-        private static void WriteStartState(string worms)
-        {
-            WorldStateWriter.WriteNewState($"start state");
-            WorldStateWriter.WriteNewState($"Worms:[{worms}]\n");
-        }
-
-        private static Boolean PlaceIsEmpty(List<Worm> worms, Position position)
-        {
-            bool empty = false;
-            foreach (var worm in worms)
-            {
-                if (worm.Position.Equals(position))
-                {
-                    empty = true;
-                    break;
-                }
-            }
-
-            return empty;
+            stateWriter.WriteNewState($"start state");
+            stateWriter.WriteNewState($"Worms:[{worms}]\n");
         }
     }
 }
