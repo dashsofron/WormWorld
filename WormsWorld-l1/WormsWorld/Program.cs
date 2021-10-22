@@ -18,14 +18,12 @@ namespace WormsWorld
         {
             return Host.CreateDefaultBuilder(args)
                 .ConfigureServices((services) =>
-
                 {
                     services.AddHostedService<WorldStarter>();
-
-                    services.AddScoped<FoodGenerator>();
-                    services.AddScoped<NameGenerator>();
-                    services.AddScoped<WorldStateWriter>();
-                    services.AddScoped<ActionPerformer>();
+                    services.AddSingleton<FoodGenerator>();
+                    services.AddSingleton<NameGenerator>();
+                    services.AddSingleton<WorldStateWriter>();
+                    services.AddSingleton<ActionPerformer>();
                 });
         }
     }

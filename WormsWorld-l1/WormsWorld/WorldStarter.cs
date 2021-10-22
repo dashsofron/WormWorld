@@ -24,7 +24,6 @@ namespace WormsWorld
         public Task StartAsync(CancellationToken cancellationToken)
         {
             Simulator simulator = new Simulator(actionPerformer, foodGenerator, nameGenerator, stateWriter);
-
             simulator.DoWork();
             return Task.CompletedTask;
         }

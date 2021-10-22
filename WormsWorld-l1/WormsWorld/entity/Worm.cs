@@ -25,6 +25,7 @@ namespace WormsWorld.entity
 
         public Action GetNextAction(Dictionary<Position, int> food, List<Worm> worms)
         {
+            if (food.Count == 0) return new Action(ActionType.NoAction, StepDirection.NoDirection);
             return new Action(ActionType.Move, _directionChange.ChangeDirection(food, worms, Position));
         }
 

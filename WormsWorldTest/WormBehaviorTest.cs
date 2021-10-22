@@ -29,5 +29,19 @@ namespace WormsWorld
             Assert.AreEqual(StepDirection.Up, action.Direction);
 
         }
+        
+        
+        [TestMethod]
+        public void NoFoodLogic()
+        {
+            Dictionary<Position, int> food = new ();
+            List<Worm> worms = new List<Worm>();
+            Position position = new Position(0, 0);
+            Worm worm = new Worm(nameGenerator.GetNewName(), position,  Life);
+            worms.Add(worm);
+            Action action = worm.GetNextAction(food, worms);
+            Assert.AreEqual(ActionType.NoAction, action.ActionType);
+            Assert.AreEqual(StepDirection.NoDirection, action.Direction);
+        }
     }
 }

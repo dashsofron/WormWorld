@@ -3,9 +3,9 @@ using WormsWorld.entity;
 
 namespace WormsWorld
 {
-    public class FoodGenerator
+    public class FoodGenerator : IFoodGenerator
     {
-        public  Position GetNewFoodPosition(in Dictionary<Position, int> food)
+        public Position GetNewFoodPosition(in Dictionary<Position, int> food)
         {
             Position position = new Position(NormalRandGenerator.NextNormal(), NormalRandGenerator.NextNormal());
             while (food.ContainsKey(position))

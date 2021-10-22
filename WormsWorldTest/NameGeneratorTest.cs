@@ -13,7 +13,7 @@ namespace WormsWorld
         [TestMethod]
         public void UniqNamesTest()
         {
-            int num = 10;
+            int num = 1000;
             HashSet<string> names = new HashSet<string>();
             for (BigInteger i = 0; i < num; i++)
                 names.Add(nameGenerator.GetNewName());

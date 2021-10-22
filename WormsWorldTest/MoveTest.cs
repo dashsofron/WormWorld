@@ -60,5 +60,18 @@ namespace WormsWorld
                 worm, worms, Step, Life, null, FoodQuality);
             Assert.AreEqual(position, worm.Position);
         }
+        
+        [TestMethod]
+        public void NoActionTest()
+        {
+            List<Worm> worms = new List<Worm>();
+            Position position = new Position(0, 0);
+            Worm worm = new Worm(nameGenerator.GetNewName(), position,  Life);
+            worms.Add(worm);
+            actionPerformer.PerformAction(new Action(ActionType.NoAction, StepDirection.NoDirection), positionGet, nameGenerator,
+                worm, worms, Step, Life, null, FoodQuality);
+            position.Y += 1;
+            Assert.AreEqual(position, worm.Position);
+        }
     }
 }
