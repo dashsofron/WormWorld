@@ -20,6 +20,9 @@ namespace WormsWorld
             Position position = new Position(0, 0);
             Worm worm = new Worm(nameGenerator.GetNewName(), position,  Life);
             worms.Add(worm);
+            // не понятно зачем 4 варианта движения
+            // нужно 4 отдельных теста, что ближайшая еда находится сверху, снизу, слева и справа
+            // и проверять что червяк идет к нужной еде
             food[new Position(0, 1)] = 10;
             food[new Position(0, 2)] = 10;
             food[new Position(1, 2)] = 10;

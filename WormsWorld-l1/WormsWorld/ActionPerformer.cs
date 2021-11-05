@@ -13,10 +13,10 @@ public class ActionPerformer
         NameGenerator nameGenerator,
         Worm worm,
         List<Worm> worms,
-        int Step,
+        int Step, // Step не используется
         int Life,
         Dictionary<Position, int> food,
-        int FoodQuality
+        int FoodQuality // такое ощущение, что параметр отвечпет и за количество жизней прибавляемое к червяку и за срок годности еды
     )
     {
         TryToEat(worm, food, FoodQuality);
@@ -43,6 +43,7 @@ public class ActionPerformer
         TryToEat(worm, food, FoodQuality);
     }
 
+    // параметр называется "качество еды", а 
     private static void TryToEat(Worm worm, Dictionary<Position, int> food, int FoodQuality)
     {
         if (food is null) return;
