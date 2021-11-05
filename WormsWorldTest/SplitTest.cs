@@ -8,6 +8,7 @@ namespace WormsWorld
     [TestClass]
     public class SplitTest
     {
+        // константы можно вынести в отдельный файл, назвать его "настройки мира"
         private const int Step = 1;
         private const int FoodQuality = 10;
         private const int Life = 10;
@@ -27,7 +28,7 @@ namespace WormsWorld
                 worm, worms, Step, Life, null, FoodQuality);
             Assert.AreEqual(2, worms.Count);
             Assert.AreEqual(position, worms[0].Position);
-            position.Y += 1;
+            position.Y += 1; 
             Assert.AreEqual(position, worms[1].Position);
         }
 

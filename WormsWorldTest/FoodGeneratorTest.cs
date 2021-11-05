@@ -6,13 +6,16 @@ using WormsWorld.entity;
 
 namespace WormsWorld
 {
+    // как понимаю эти тесты проверяют ConstFoodGenerator
+    // вместо реального FoodGenerator
     [TestClass]
-    public class FoodGeneratorTest
+    public class FoodGeneratorTest  
     {
         private const int FoodQuality = 10;
 
         private IFoodGenerator foodGenerator = new ConstFoodGenerator();
 
+        // по названию теста не понятно что он проверяет
         [TestMethod]
         public void UniqFoodTest()
         {
@@ -21,6 +24,10 @@ namespace WormsWorld
             Assert.AreEqual(1, food.Count);
         }
         
+        // рекомендую использовать FluentAssertion библиотеку
+        // там можно использовать следующий синтаксис
+        // Action act = () => foodGenerator.GetNewFoodPosition(food);
+        // act.Should().Throw<TimeoutException>();
         [TestMethod]
         [ExpectedException(typeof(TimeoutException),"can't add not equal food")]
 

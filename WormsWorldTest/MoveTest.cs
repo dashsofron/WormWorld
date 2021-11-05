@@ -16,6 +16,9 @@ namespace WormsWorld
         private NameGenerator nameGenerator = new ();
 
 
+        // тоже непонятное название,
+        // как понимаю из теста он проверяет, что червяк сдвигается на 1 позицию вверх
+        // если Action.Up и клетка пуста   
         [TestMethod]
         public void EmptyPlaceTest()
         {
@@ -25,6 +28,7 @@ namespace WormsWorld
             worms.Add(worm);
             actionPerformer.PerformAction(new Action(ActionType.Move, StepDirection.Up), positionGet, nameGenerator,
                 worm, worms, Step, Life, null, FoodQuality);
+            // можно сразу задать значение (0, 1) в конструкторе 
             position.Y += 1;
             Assert.AreEqual(position, worm.Position);
         }
@@ -61,6 +65,10 @@ namespace WormsWorld
             Assert.AreEqual(position, worm.Position);
         }
         
+        
+        // тест проходит, но в нем ошибка position.Y += 1;
+        // в тесте червяк передвигается хотя должен остаться в позиции (0, 0)
+        // что выявляет серьёзную ошибку в коде (Можно двигать червяка без его ведома).
         [TestMethod]
         public void NoActionTest()
         {
