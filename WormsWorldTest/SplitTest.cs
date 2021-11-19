@@ -11,7 +11,7 @@ namespace WormsWorld
         private const int Step = 1;
         private const int FoodQuality = 10;
         private const int Life = 10;
-        private PositionGet positionGet = new PositionGet(Step);
+        private NextPositionGetter _nextPositionGetter = new NextPositionGetter(Step);
         private ActionPerformer actionPerformer = new ActionPerformer();
         private NameGenerator nameGenerator = new NameGenerator();
 
@@ -23,8 +23,8 @@ namespace WormsWorld
             Position position = new Position(0, 0);
             Worm worm = new Worm(nameGenerator.GetNewName(), position, Life + 1);
             worms.Add(worm);
-            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), positionGet, nameGenerator,
-                worm, worms, Step, Life, null, FoodQuality);
+            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), _nextPositionGetter, nameGenerator,
+                worm, worms, Life, null, FoodQuality);
             Assert.AreEqual(2, worms.Count);
             Assert.AreEqual(position, worms[0].Position);
             position.Y += 1;
@@ -38,8 +38,8 @@ namespace WormsWorld
             Position position = new Position(0, 0);
             Worm worm = new Worm(nameGenerator.GetNewName(), position, Life);
             worms.Add(worm);
-            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), positionGet, nameGenerator,
-                worm, worms, Step, Life, null, FoodQuality);
+            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), _nextPositionGetter, nameGenerator,
+                worm, worms, Life, null, FoodQuality);
             Assert.AreEqual(1, worms.Count);
             Assert.AreEqual(position, worms[0].Position);
         }
@@ -53,8 +53,8 @@ namespace WormsWorld
             Worm wormInNextPosition = new Worm(nameGenerator.GetNewName(), new Position(0, 1), Life);
             worms.Add(worm);
             worms.Add(wormInNextPosition);
-            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), positionGet, nameGenerator,
-                worm, worms, Step, Life, null, FoodQuality);
+            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), _nextPositionGetter, nameGenerator,
+                worm, worms, Life, null, FoodQuality);
             Assert.AreEqual(2, worms.Count);
         }
     }

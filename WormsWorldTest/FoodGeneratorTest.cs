@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WormsWorld.entity;
 
@@ -14,7 +15,7 @@ namespace WormsWorld
         private IFoodGenerator foodGenerator = new ConstFoodGenerator();
 
         [TestMethod]
-        public void UniqFoodTest()
+        public void SingleFoodTest()
         {
             Dictionary<Position, int> food = new();
             food[foodGenerator.GetNewFoodPosition(food)] = FoodQuality;
@@ -22,13 +23,12 @@ namespace WormsWorld
         }
         
         [TestMethod]
-        [ExpectedException(typeof(TimeoutException),"can't add not equal food")]
-
-        public void NotUniqFoodTest()
+        public void ConcurFoodTest()
         {
             Dictionary<Position, int> food = new();
             food[foodGenerator.GetNewFoodPosition(food)] = FoodQuality;
-            food[foodGenerator.GetNewFoodPosition(food)] = FoodQuality;
+            Action act = () => foodGenerator.GetNewFoodPosition(food);
+            act.Should().Throw<TimeoutException>();
         }
     }
 }

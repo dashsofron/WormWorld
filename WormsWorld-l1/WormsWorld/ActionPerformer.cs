@@ -9,18 +9,17 @@ public class ActionPerformer
 {
     public void PerformAction(
         Action action,
-        PositionGet positionGet,
+        NextPositionGetter nextPositionGetter,
         NameGenerator nameGenerator,
         Worm worm,
         List<Worm> worms,
-        int Step,
         int Life,
         Dictionary<Position, int> food,
-        int FoodQuality
+        int FoodSaturability
     )
     {
-        TryToEat(worm, food, FoodQuality);
-        Position newPosition = positionGet.GetNextPosition(worm.Position, action.Direction);
+        TryToEat(worm, food, FoodSaturability);
+        Position newPosition = nextPositionGetter.GetNextPosition(worm.Position, action.Direction);
         if (PlaceIsEmpty(worms, newPosition))
         {
             switch (action.ActionType)
@@ -40,15 +39,15 @@ public class ActionPerformer
         }
 
         worm.LifeStrength -= 1;
-        TryToEat(worm, food, FoodQuality);
+        TryToEat(worm, food, FoodSaturability);
     }
 
-    private static void TryToEat(Worm worm, Dictionary<Position, int> food, int FoodQuality)
+    private static void TryToEat(Worm worm, Dictionary<Position, int> food, int FoodSaturability)
     {
         if (food is null) return;
         if (food.ContainsKey(worm.Position))
         {
-            worm.LifeStrength += FoodQuality;
+            worm.LifeStrength += FoodSaturability;
             food.Remove(worm.Position);
         }
     }
@@ -62,7 +61,6 @@ public class ActionPerformer
                 return false;
             }
         }
-
         return true;
     }
 }

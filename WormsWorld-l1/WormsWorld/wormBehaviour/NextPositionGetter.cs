@@ -2,16 +2,16 @@
 
 namespace WormsWorld.wormBehaviour
 {
-    public class PositionGet
+    public class NextPositionGetter
     {
-        private int _step = 1;
+        private readonly int _step;
 
-        public PositionGet(in int step)
+        public NextPositionGetter(int step)
         {
             _step = step;
         }
 
-        public Position GetNextPosition(in Position position, StepDirection direction)
+        public Position GetNextPosition(Position position, StepDirection direction)
         {
             Position nextPosition = new Position(position);
             switch (direction)

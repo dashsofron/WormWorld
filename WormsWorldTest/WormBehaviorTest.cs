@@ -13,7 +13,7 @@ namespace WormsWorld
         private const int Life = 10;
 
         [TestMethod]
-        public void ClosestFoodLogic()
+        public void ClosestFoodUpLogic()
         {
             Dictionary<Position, int> food = new ();
             List<Worm> worms = new List<Worm>();
@@ -22,12 +22,50 @@ namespace WormsWorld
             worms.Add(worm);
             food[new Position(0, 1)] = 10;
             food[new Position(0, 2)] = 10;
-            food[new Position(1, 2)] = 10;
-            food[new Position(2, 2)] = 10;
             Action action = worm.GetNextAction(food, worms);
             Assert.AreEqual(ActionType.Move, action.ActionType);
             Assert.AreEqual(StepDirection.Up, action.Direction);
-
+        }
+        [TestMethod]
+        public void ClosestFoodDownLogic()
+        {
+            Dictionary<Position, int> food = new ();
+            List<Worm> worms = new List<Worm>();
+            Position position = new Position(0, 0);
+            Worm worm = new Worm(nameGenerator.GetNewName(), position,  Life);
+            worms.Add(worm);
+            food[new Position(0, -1)] = 10;
+            food[new Position(0, 2)] = 10;
+            Action action = worm.GetNextAction(food, worms);
+            Assert.AreEqual(ActionType.Move, action.ActionType);
+            Assert.AreEqual(StepDirection.Down, action.Direction);
+        }
+        [TestMethod]
+        public void ClosestFoodRightLogic()
+        {
+            Dictionary<Position, int> food = new ();
+            List<Worm> worms = new List<Worm>();
+            Position position = new Position(0, 0);
+            Worm worm = new Worm(nameGenerator.GetNewName(), position,  Life);
+            worms.Add(worm);
+            food[new Position(1, 0)] = 10;
+            food[new Position(0, 2)] = 10;
+            Action action = worm.GetNextAction(food, worms);
+            Assert.AreEqual(ActionType.Move, action.ActionType);
+            Assert.AreEqual(StepDirection.Right, action.Direction);
+        }
+        public void ClosestFoodLeftLogic()
+        {
+            Dictionary<Position, int> food = new ();
+            List<Worm> worms = new List<Worm>();
+            Position position = new Position(0, 0);
+            Worm worm = new Worm(nameGenerator.GetNewName(), position,  Life);
+            worms.Add(worm);
+            food[new Position(-1, 0)] = 10;
+            food[new Position(0, 2)] = 10;
+            Action action = worm.GetNextAction(food, worms);
+            Assert.AreEqual(ActionType.Move, action.ActionType);
+            Assert.AreEqual(StepDirection.Left, action.Direction);
         }
         
         

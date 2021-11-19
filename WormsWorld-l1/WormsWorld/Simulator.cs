@@ -18,9 +18,9 @@ namespace WormsWorld
         private NameGenerator nameGenerator;
         private WorldStateWriter stateWriter;
         private const int StepNum = 10;
-        private const int Step = 1;
-        private const int FoodQuality = 10;
-        private const int Life = 10;
+        private const int StepSize = 1;
+        private const int FoodSaturability = 10;
+        private const int BaseLifeStrength = 10;
 
         public Simulator(ActionPerformer actionPerformer, FoodGenerator foodGenerator, NameGenerator nameGenerator,
             WorldStateWriter stateWriter)
@@ -33,11 +33,11 @@ namespace WormsWorld
 
         public void DoWork()
         {
-            PositionGet positionGet = new PositionGet(Step);
+            NextPositionGetter nextPositionGetter = new NextPositionGetter(StepSize);
 
             Dictionary<Position, int> food = new Dictionary<Position, int>();
             List<Worm> worms = new List<Worm>();
-            worms.Add(new Worm(nameGenerator.GetNewName(), new Position(0, 0), Life));
+            worms.Add(new Worm(nameGenerator.GetNewName(), new Position(0, 0), BaseLifeStrength));
             string wormsStart = "";
 
             foreach (var worm in worms)
@@ -63,15 +63,15 @@ namespace WormsWorld
                 }
 
                 Position newFoodPosition = foodGenerator.GetNewFoodPosition(food);
-                food.Add(newFoodPosition, FoodQuality);
+                food.Add(newFoodPosition, FoodSaturability);
                 foodBeforeStr +=
                     $"({newFoodPosition.X.ToString()},{newFoodPosition.Y.ToString()},{food[newFoodPosition].ToString()}) ";
 
                 foreach (var worm in new List<Worm>(worms))
                 {
                     Action action = worm.GetNextAction(food, worms);
-                    actionPerformer.PerformAction(action, positionGet, nameGenerator, worm, worms, Step, Life, food,
-                        FoodQuality);
+                    actionPerformer.PerformAction(action, nextPositionGetter, nameGenerator, worm, worms, BaseLifeStrength, food,
+                        FoodSaturability);
                     if (worm.LifeStrength == 0)
                     {
                         worms.Remove(worm);
