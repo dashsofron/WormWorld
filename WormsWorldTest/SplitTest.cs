@@ -11,9 +11,9 @@ namespace WormsWorld
         private const int Step = 1;
         private const int FoodQuality = 10;
         private const int Life = 10;
-        private NextPositionGetter _nextPositionGetter = new NextPositionGetter(Step);
-        private ActionPerformer actionPerformer = new ActionPerformer();
-        private NameGenerator nameGenerator = new NameGenerator();
+        private NextPositionGetter _nextPositionGetter = new(Step);
+        private ActionPerformer actionPerformer = new();
+        private NameGenerator nameGenerator = new();
 
 
         [TestMethod]
@@ -21,9 +21,10 @@ namespace WormsWorld
         {
             List<Worm> worms = new List<Worm>();
             Position position = new Position(0, 0);
-            Worm worm = new Worm(nameGenerator.GetNewName(), position, Life + 1);
+            Worm worm = new Worm(nameGenerator.GetNewName(), new Position(0, 0), Life + 1);
             worms.Add(worm);
-            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), _nextPositionGetter, nameGenerator,
+            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), _nextPositionGetter,
+                nameGenerator,
                 worm, worms, Life, null, FoodQuality);
             Assert.AreEqual(2, worms.Count);
             Assert.AreEqual(position, worms[0].Position);
@@ -36,9 +37,10 @@ namespace WormsWorld
         {
             List<Worm> worms = new List<Worm>();
             Position position = new Position(0, 0);
-            Worm worm = new Worm(nameGenerator.GetNewName(), position, Life);
+            Worm worm = new Worm(nameGenerator.GetNewName(), new Position(0, 0), Life);
             worms.Add(worm);
-            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), _nextPositionGetter, nameGenerator,
+            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), _nextPositionGetter,
+                nameGenerator,
                 worm, worms, Life, null, FoodQuality);
             Assert.AreEqual(1, worms.Count);
             Assert.AreEqual(position, worms[0].Position);
@@ -48,12 +50,12 @@ namespace WormsWorld
         public void NotEmptyPlace()
         {
             List<Worm> worms = new List<Worm>();
-            Position position = new Position(0, 0);
-            Worm worm = new Worm(nameGenerator.GetNewName(), position, Life);
+            Worm worm = new Worm(nameGenerator.GetNewName(), new Position(0, 0), Life);
             Worm wormInNextPosition = new Worm(nameGenerator.GetNewName(), new Position(0, 1), Life);
             worms.Add(worm);
             worms.Add(wormInNextPosition);
-            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), _nextPositionGetter, nameGenerator,
+            actionPerformer.PerformAction(new Action(ActionType.Split, StepDirection.Up), _nextPositionGetter,
+                nameGenerator,
                 worm, worms, Life, null, FoodQuality);
             Assert.AreEqual(2, worms.Count);
         }

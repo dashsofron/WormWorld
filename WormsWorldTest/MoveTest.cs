@@ -20,12 +20,12 @@ namespace WormsWorld
         public void MovingToEmptyPlaceTest()
         {
             List<Worm> worms = new List<Worm>();
-            Position position = new Position(0, 0);
-            Worm worm = new Worm(nameGenerator.GetNewName(), position, Life);
+            Position position = new Position(0, 1);
+            Worm worm = new Worm(nameGenerator.GetNewName(), new Position(0, 0), Life);
             worms.Add(worm);
-            actionPerformer.PerformAction(new Action(ActionType.Move, StepDirection.Up), _nextPositionGetter, nameGenerator,
+            actionPerformer.PerformAction(new Action(ActionType.Move, StepDirection.Up), _nextPositionGetter,
+                nameGenerator,
                 worm, worms, Life, null, FoodQuality);
-            position.Y += 1;//тут была пометка про конструктор
             Assert.AreEqual(position, worm.Position);
         }
 
@@ -33,15 +33,15 @@ namespace WormsWorld
         public void MovingToPlaceWithFoodTest()
         {
             List<Worm> worms = new List<Worm>();
-            Position position = new Position(0, 0);
-            Worm worm = new Worm(nameGenerator.GetNewName(), position, Life);
+            Position position = new Position(0, 1);
+            Worm worm = new Worm(nameGenerator.GetNewName(), new Position(0, 0), Life);
             Dictionary<Position, int> food = new Dictionary<Position, int>();
             food.Add(new Position(0, 1), FoodQuality);
             worms.Add(worm);
 
-            actionPerformer.PerformAction(new Action(ActionType.Move, StepDirection.Up), _nextPositionGetter, nameGenerator,
+            actionPerformer.PerformAction(new Action(ActionType.Move, StepDirection.Up), _nextPositionGetter,
+                nameGenerator,
                 worm, worms, Life, food, FoodQuality);
-            position.Y += 1;
             Assert.AreEqual(position, worm.Position);
             Assert.AreEqual(2 * Life - 1, worm.LifeStrength);
         }
@@ -51,12 +51,13 @@ namespace WormsWorld
         {
             List<Worm> worms = new List<Worm>();
             Position position = new Position(0, 0);
-            Worm worm = new Worm(nameGenerator.GetNewName(), position, Life);
+            Worm worm = new Worm(nameGenerator.GetNewName(), new Position(0, 0), Life);
             Worm wormInNextPosition = new Worm(nameGenerator.GetNewName(), new Position(0, 1), Life);
             worms.Add(worm);
             worms.Add(wormInNextPosition);
 
-            actionPerformer.PerformAction(new Action(ActionType.Move, StepDirection.Up), _nextPositionGetter, nameGenerator,
+            actionPerformer.PerformAction(new Action(ActionType.Move, StepDirection.Up), _nextPositionGetter,
+                nameGenerator,
                 worm, worms, Life, null, FoodQuality);
             Assert.AreEqual(position, worm.Position);
         }
@@ -66,13 +67,13 @@ namespace WormsWorld
         {
             List<Worm> worms = new List<Worm>();
             Position position = new Position(0, 0);
-            Worm worm = new Worm(nameGenerator.GetNewName(), position, Life);
+            Worm worm = new Worm(nameGenerator.GetNewName(), new Position(0, 0), Life);
             worms.Add(worm);
             actionPerformer.PerformAction(
-                new Action(ActionType.NoAction, StepDirection.NoDirection), 
+                new Action(ActionType.NoAction, StepDirection.NoDirection),
                 _nextPositionGetter, nameGenerator,
                 worm, worms, Life, null, FoodQuality
-                );
+            );
             Assert.AreEqual(position, worm.Position);
         }
     }
